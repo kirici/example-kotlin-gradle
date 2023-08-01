@@ -14,9 +14,10 @@ val detektTask = tasks.register<JavaExec>("detekt") {
     classpath = detekt
 
     val input = projectDir
-    val config = "$projectDir/detekt.yml"
     val exclude = ".*/build/.*,.*/resources/.*"
-    val params = listOf("-i", input, "-c", config, "-ex", exclude)
+    val sarif = "sarif:build/reports/detekt.sarif"
+    val basepath = "."
+    val params = listOf("-i", input, "-ex", exclude, "-r", sarif, "--base-path", basepath)
 
     args(params)
 }
