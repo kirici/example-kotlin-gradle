@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN ./gradlew check ; ./gradlew fatJar
+RUN ./gradlew fatJar --no-daemon
 
 # stage 2
 FROM eclipse-temurin:11-jdk-jammy

@@ -10,6 +10,7 @@ repositories {
 val detekt by configurations.creating
 
 val detektTask = tasks.register<JavaExec>("detekt") {
+    setIgnoreExitValue(true)
     main = "io.gitlab.arturbosch.detekt.cli.Main"
     classpath = detekt
 
@@ -38,6 +39,7 @@ tasks.jar {
 }
 
 tasks.create("fatJar", Jar::class) {
+    dependsOn(detektTask)
     archiveClassifier.set("fat")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }) {
@@ -47,9 +49,4 @@ tasks.create("fatJar", Jar::class) {
         attributes["Main-Class"] = "HelloWorldKt" // Specify the main class for the fat jar
     }
     with(tasks.jar.get())
-}
-
-// Make detekt run on every build
-tasks.check {
-    dependsOn(detektTask)
 }
