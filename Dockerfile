@@ -6,13 +6,13 @@ WORKDIR /app
 
 COPY . .
 
-RUN ./gradlew fatJar --no-daemon
+RUN ./gradlew build --no-daemon
 
 # stage 2
 FROM eclipse-temurin:11-jdk-jammy
 
 WORKDIR /app
 
-COPY --from=builder /app/build/libs/app-fat.jar .
+COPY --from=builder /app/app/build/libs/app.jar .
 
-CMD ["java", "-jar", "app-fat.jar"]
+CMD ["java", "-jar", "app.jar"]
