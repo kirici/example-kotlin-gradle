@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # stage 1
-FROM gradle:8.3.0-jdk11-jammy AS builder
+FROM gradle:8.3.0-jdk11-jammy AS build
 
 WORKDIR /app
 
@@ -13,6 +13,6 @@ FROM eclipse-temurin:11-jdk-jammy
 
 WORKDIR /app
 
-COPY --from=builder /app/app/build/libs/app.jar .
+COPY --from=build /app/app/build/libs/app.jar .
 
 CMD ["java", "-jar", "app.jar"]
