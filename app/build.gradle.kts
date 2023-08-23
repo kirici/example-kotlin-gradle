@@ -1,9 +1,9 @@
-import com.saveourtool.diktat.plugin.gradle.DiktatExtension
+import org.cqfn.diktat.plugin.gradle.DiktatExtension
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.8.22"
     id("io.gitlab.arturbosch.detekt").version("1.23.1")
-    id("com.saveourtool.diktat.diktat-gradle-plugin") version "1.2.5"
+    id("org.cqfn.diktat.diktat-gradle-plugin") version "1.2.5"
     application
     checkstyle
 }
@@ -30,6 +30,6 @@ tasks.withType<Checkstyle>().configureEach {
     reports {
         sarif.required = true
         xml.required = false
-        html.required = fase
+        html.required = false
     }
 }
