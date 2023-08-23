@@ -1,19 +1,24 @@
 # syntax=docker/dockerfile:1
 FROM gradle:8.3.0-jdk11-jammy AS base
+ENV GRADLE_USER_HOME="${PWD}"/.gradle
+
 WORKDIR /app
 COPY ./gradle ./gradle
-COPY ./app/build.gradle.kts ./app/
-COPY ./gradle.properties ./settings.gradle.kts ./gradlew .
+COPY ./gradlew .
 RUN ./gradlew --version
 
 #------------------------------#
 FROM base AS build
+ENV GRADLE_USER_HOME="${PWD}"/.gradle
+
 WORKDIR /app
 COPY --from=base /app .
-RUN ./gradlew build
+COPY . .
+RUN ./gradlew check && ./gradlew build
 
 #------------------------------#
 FROM eclipse-temurin:11-jdk-jammy
+
 WORKDIR /app
 COPY --from=build /app/app/build/libs/app.jar .
 CMD ["java", "-jar", "app.jar"]
