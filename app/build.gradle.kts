@@ -5,11 +5,19 @@ plugins {
     id("io.gitlab.arturbosch.detekt").version("1.23.1")
     id("org.cqfn.diktat.diktat-gradle-plugin") version "1.2.5"
     application
-    checkstyle
 }
 
 repositories {
     mavenCentral() 
+}
+
+diktat {
+    inputs {
+        include("src/**/*.kt")
+    }
+    ignoreFailures = true
+    reporter = "sarif"
+    output = "diktat-report.sarif"
 }
 
 dependencies {
@@ -17,19 +25,4 @@ dependencies {
 
 application {
     mainClass.set("demo.AppKt") 
-}
-diktat {
-    inputs { include("app/src/**/*.kt") }
-}
-checkstyle {
-    toolVersion = "10.3.3"
-    isShowViolations = true
-    isIgnoreFailures = true
-}
-tasks.withType<Checkstyle>().configureEach {
-    reports {
-        sarif.required = true
-        xml.required = false
-        html.required = false
-    }
 }
