@@ -14,7 +14,7 @@ ENV GRADLE_USER_HOME="${PWD}"/.gradle
 WORKDIR /app
 COPY --from=base /app .
 COPY . .
-RUN ./gradlew check && ./gradlew build
+RUN ./gradlew build --no-daemon
 
 #------------------------------#
 FROM eclipse-temurin:11-jdk-jammy

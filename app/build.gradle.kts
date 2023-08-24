@@ -17,7 +17,11 @@ diktat {
     }
     ignoreFailures = true
     reporter = "sarif"
-    output = "diktat-report.sarif"
+    output = "build/reports/diktat/diktat.sarif"
+}
+
+tasks.check {
+    dependsOn(tasks.diktatCheck)
 }
 
 dependencies {
