@@ -2,7 +2,7 @@ package demo
 
 class App {
     val greeting: String
-        get() {
+        get() {  
             return "Hello World!"
         }
 }
